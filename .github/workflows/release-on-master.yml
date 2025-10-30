@@ -7,7 +7,7 @@ on:
   # Trigger this workflow after the `test.yml` workflow completes
   workflow_run:
     workflows:
-      - test.yml
+      - VS Code Extension Tests (headless)
     types:
       - completed
 
