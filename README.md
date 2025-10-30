@@ -1,67 +1,57 @@
 # vscode-line-counter
 
-軽量な VS Code 拡張機能。選択中のテキストの「行数」をステータスバーに表示します。
+Lightweight Visual Studio Code extension that shows the number of selected lines in the status bar.
 
-## 概要
+## Overview
 
-この拡張は、エディタで選択された範囲（複数選択にも対応）の合計行数を、ステータスバーにアイコンとともに表示します。
-選択が無い場合は自動で非表示になります。軽量で常時動作してもほとんど負荷がかかりません。
+This extension displays the total number of lines selected in the active editor (supports multiple selections) in the status bar along with an icon. When there is no selection, the status bar item is hidden. The extension is lightweight and designed to run continuously with minimal overhead.
 
-特徴:
+Key features:
 
-- 複数選択の行数を合算して表示
-- 選択が無いときはステータスバーを隠す
-- 起動後すぐに利用可能（アクティベーション: `onStartupFinished`）
+- Sums line counts across multiple selections
+- Hides the status bar item when nothing is selected
+- Activates on startup for immediate availability (`activationEvents`: `onStartupFinished`)
 
-## スクリーンショット
+## Requirements
 
-ステータスバーに以下のように表示されます:
+- Visual Studio Code 1.105.0 or newer (see `engines.vscode` in `package.json`)
 
-`$(selection) 3 行選択`
+## Usage
 
-（画像を追加したい場合は `images/` に配置してこの README を更新してください）
+1. Install the extension or run it from the development host.
+2. Select text in an editor — the selected line count appears on the left side of the status bar.
 
-## 要件
+Note: The extension activates on `onStartupFinished`, so the status may take a short moment to appear right after window startup.
 
-- Visual Studio Code 1.105.0 以上（`package.json` の `engines.vscode` を参照）
+## For developers
 
-## 使い方
+Build and development scripts are defined in `package.json`.
 
-1. 拡張をインストールまたは開発環境で起動します。
-1. エディタでテキストを選択すると、ステータスバー左側に選択行数が表示されます。
+Typical workflow:
 
-備考: 拡張は `onStartupFinished` でアクティベートするため、ウィンドウ起動直後はステータス表示が反映されるまで少し時間がかかることがあります。
-
-## 開発者向け
-
-開発・ビルドに関する主要なスクリプトは `package.json` に定義されています。
-
-基本的な手順:
-
-1. 依存をインストール
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-1. 開発モードでビルド監視を起動（ソース変更を即座に反映）
+1. Start development watch mode (rebuilds on source changes):
 
 ```bash
 npm run watch
 ```
 
-1. VS Code でこのリポジトリを開き、デバッグビューから「Launch Extension」を実行（F5）。
+1. Open this repository in VS Code and use the Debug view to run "Launch Extension" (F5).
 
-ビルド・パッケージング:
+Build & packaging:
 
-- 開発ビルド: `npm run compile`
-- 本番パッケージ: `npm run package`（さらに `.vsix` を作る場合は `npm run vsix`）
+- Development build: `npm run compile`
+- Production package: `npm run package` (create `.vsix` with `npm run vsix`)
 
-テスト:
+Tests:
 
-このリポジトリにはテストが含まれています。開発時はまずビルド（`npm run compile` または `npm run watch`）し、VS Code のデバッグで拡張を起動して動作確認してください。
+This repository includes tests. Build first (`npm run compile` or `npm run watch`), then run the test runner or use the test task defined in `package.json`.
 
-## 貢献
+## Notes
 
-バグ報告・機能要望やプルリクエストは歓迎します。Issue を立てる際は再現手順と環境（VS Code のバージョン、拡張のバージョン）を添えてください。
-
+- The README content has been translated from Japanese to English and checked against `package.json` for activation and engine compatibility. If you update activation or engine settings in `package.json`, please update this README accordingly.
