@@ -10,12 +10,48 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "vscode-line-counter" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
+	// ステータスバー項目を作成
+	const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+	statusBarItem.tooltip = '選択された行数を表示します';
+	context.subscriptions.push(statusBarItem);
+
+	// 選択行数を計算してステータスバーを更新する関数
+	const updateSelectionCount = (editor?: vscode.TextEditor) => {
+		const active = editor ?? vscode.window.activeTextEditor;
+		if (!active) {
+			statusBarItem.hide();
+			return;
+		}
+
+		const selections = active.selections;
+		let totalLines = 0;
+		for (const sel of selections) {
+			if (sel.isEmpty) {
+				continue;
+			}
+			const start = sel.start.line;
+			const end = sel.end.line;
+			// 選択範囲の行数は終端と始端の差 + 1
+			totalLines += Math.abs(end - start) + 1;
+		}
+
+		if (totalLines > 0) {
+			statusBarItem.text = `$(selection) ${totalLines} 行選択`;
+			statusBarItem.show();
+		} else {
+			statusBarItem.hide();
+		}
+	};
+
+	// 初期更新
+	updateSelectionCount();
+
+	// エディタの切替・選択変更を監視
+	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor((e) => updateSelectionCount(e)));
+	context.subscriptions.push(vscode.window.onDidChangeTextEditorSelection((e) => updateSelectionCount(e.textEditor)));
+
+	// 既存のコマンド（テンプレート）も残す
 	const disposable = vscode.commands.registerCommand('vscode-line-counter.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
 		vscode.window.showInformationMessage('Hello World from vscode-line-counter!');
 	});
 
