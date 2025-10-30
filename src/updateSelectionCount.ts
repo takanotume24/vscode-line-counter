@@ -13,7 +13,7 @@ export function updateSelectionCount(statusBarItem: vscode.StatusBarItem, editor
 
     const total = calcSelectedLines(active.selections);
     if (total > 0) {
-        statusBarItem.text = `$(selection) ${total} line selected`;
+        statusBarItem.text = `$(selection) ${total} ${total === 1 ? 'line' : 'lines'} selected`;
         statusBarItem.show();
     } else {
         statusBarItem.hide();
