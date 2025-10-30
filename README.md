@@ -1,71 +1,67 @@
-# vscode-line-counter README
+# vscode-line-counter
 
-This is the README for your extension "vscode-line-counter". After writing up a brief description, we recommend including the following sections.
+軽量な VS Code 拡張機能。選択中のテキストの「行数」をステータスバーに表示します。
 
-## Features
+## 概要
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+この拡張は、エディタで選択された範囲（複数選択にも対応）の合計行数を、ステータスバーにアイコンとともに表示します。
+選択が無い場合は自動で非表示になります。軽量で常時動作してもほとんど負荷がかかりません。
 
-For example if there is an image subfolder under your extension project workspace:
+特徴:
 
-\!\[feature X\]\(images/feature-x.png\)
+- 複数選択の行数を合算して表示
+- 選択が無いときはステータスバーを隠す
+- 起動後すぐに利用可能（アクティベーション: `onStartupFinished`）
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## スクリーンショット
 
-## Requirements
+ステータスバーに以下のように表示されます:
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+`$(selection) 3 行選択`
 
-## Extension Settings
+（画像を追加したい場合は `images/` に配置してこの README を更新してください）
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## 要件
 
-For example:
+- Visual Studio Code 1.105.0 以上（`package.json` の `engines.vscode` を参照）
 
-This extension contributes the following settings:
+## 使い方
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+1. 拡張をインストールまたは開発環境で起動します。
+1. エディタでテキストを選択すると、ステータスバー左側に選択行数が表示されます。
 
-## Known Issues
+備考: 拡張は `onStartupFinished` でアクティベートするため、ウィンドウ起動直後はステータス表示が反映されるまで少し時間がかかることがあります。
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## 開発者向け
 
-## Release Notes
+開発・ビルドに関する主要なスクリプトは `package.json` に定義されています。
 
-Users appreciate release notes as you update your extension.
+基本的な手順:
 
-### 1.0.0
+1. 依存をインストール
 
-Initial release of ...
+```bash
+npm install
+```
 
-### 1.0.1
+1. 開発モードでビルド監視を起動（ソース変更を即座に反映）
 
-Fixed issue #.
+```bash
+npm run watch
+```
 
-### 1.1.0
+1. VS Code でこのリポジトリを開き、デバッグビューから「Launch Extension」を実行（F5）。
 
-Added features X, Y, and Z.
+ビルド・パッケージング:
 
----
+- 開発ビルド: `npm run compile`
+- 本番パッケージ: `npm run package`（さらに `.vsix` を作る場合は `npm run vsix`）
 
-## Following extension guidelines
+テスト:
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+このリポジトリにはテストが含まれています。開発時はまずビルド（`npm run compile` または `npm run watch`）し、VS Code のデバッグで拡張を起動して動作確認してください。
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+## 貢献
 
-## Working with Markdown
+バグ報告・機能要望やプルリクエストは歓迎します。Issue を立てる際は再現手順と環境（VS Code のバージョン、拡張のバージョン）を添えてください。
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

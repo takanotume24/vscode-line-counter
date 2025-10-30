@@ -49,13 +49,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// エディタの切替・選択変更を監視
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor((e) => updateSelectionCount(e)));
 	context.subscriptions.push(vscode.window.onDidChangeTextEditorSelection((e) => updateSelectionCount(e.textEditor)));
-
-	// 既存のコマンド（テンプレート）も残す
-	const disposable = vscode.commands.registerCommand('vscode-line-counter.helloWorld', () => {
-		vscode.window.showInformationMessage('Hello World from vscode-line-counter!');
-	});
-
-	context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated
