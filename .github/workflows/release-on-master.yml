@@ -1,15 +1,8 @@
 name: Build VSIX and create Release on master
 
 on:
-  push:
-    branches:
-      - master
-  # Trigger this workflow after the `test.yml` workflow completes
-  workflow_run:
-    workflows:
-      - VS Code Extension Tests (headless)
-    types:
-      - completed
+  pull_request:
+    branches: ["master"]
 
 permissions:
   contents: write
@@ -17,10 +10,7 @@ permissions:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-    # Only run the job when either:
-    # - a push to master triggered the workflow, or
-    # - the `test.yml` workflow_run completed successfully on master
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master') }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
